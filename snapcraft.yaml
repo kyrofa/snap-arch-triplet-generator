@@ -1,0 +1,13 @@
+name: snap-arch-triplet-generator
+version: '0.1'
+summary: Turn $SNAP_ARCH into $SNAP_ARCH_TRIPLET
+description: |
+  Simply launch your app with with_snap_arch_triplet <app>.
+
+grade: stable
+confinement: strict
+
+parts:
+  snap-arch-triplet-generator:
+    plugin: dump
+    source: src/

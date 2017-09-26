@@ -1,0 +1,14 @@
+#!/bin/sh
+
+if [ "$SNAP_ARCH" = "amd64" ]; then
+  TRIPLET="x86_64-linux-gnu"
+elif [ "$SNAP_ARCH" = "armhf" ]; then
+  TRIPLET="arm-linux-gnueabihf"
+elif [ "$SNAP_ARCH" = "arm64" ]; then
+  TRIPLET="aarch64-linux-gnu"
+else
+  TRIPLET="$SNAP_ARCH-linux-gnu"
+fi
+
+export SNAP_ARCH_TRIPLET=$TRIPLET
+exec "$@"
