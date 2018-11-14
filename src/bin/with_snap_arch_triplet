@@ -1,14 +1,35 @@
 #!/bin/sh
 
-if [ "$SNAP_ARCH" = "amd64" ]; then
-  TRIPLET="x86_64-linux-gnu"
-elif [ "$SNAP_ARCH" = "armhf" ]; then
-  TRIPLET="arm-linux-gnueabihf"
-elif [ "$SNAP_ARCH" = "arm64" ]; then
-  TRIPLET="aarch64-linux-gnu"
-else
-  TRIPLET="$SNAP_ARCH-linux-gnu"
-fi
+# Refer:
+#
+# * Environmental variables - doc - snapcraft.io
+#   https://forum.snapcraft.io/t/environmental-variables/7983
+# * Multiarch/Tuples - Debian Wiki
+#   https://wiki.debian.org/Multiarch/Tuples
+#   NOTE: Only consider Linux archs with the `released` status in Debian for now
+case "${SNAP_ARCH}" in
+  # These are the special cases
+  amd64)
+    TRIPLET=x86_64-linux-gnu
+  ;;
+  armel)
+    TRIPLET=arm-linux-gnueabi
+  ;;
+  armhf)
+    TRIPLET=arm-linux-gnueabihf
+  ;;
+  arm64)
+    TRIPLET=aarch64-linux-gnu
+  ;;
+  ppc64el)
+    TRIPLET=powerpc64le-linux-gnu
+  ;;
+  # Consider rest of them not exceptions
+  s390x \
+  |*)
+    TRIPLET="${SNAP_ARCH}"-linux-gnu
+  ;;
+esac
 
 export SNAP_ARCH_TRIPLET=$TRIPLET
 exec "$@"
