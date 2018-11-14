@@ -1,5 +1,12 @@
 #!/bin/sh
 
+# Refer:
+#
+# * Environmental variables - doc - snapcraft.io
+#   https://forum.snapcraft.io/t/environmental-variables/7983
+# * Multiarch/Tuples - Debian Wiki
+#   https://wiki.debian.org/Multiarch/Tuples
+#   NOTE: Only consider Linux archs with the `released` status in Debian for now
 case "${SNAP_ARCH}" in
   # These are the special cases
   amd64)
